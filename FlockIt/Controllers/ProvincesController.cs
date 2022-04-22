@@ -10,13 +10,10 @@ namespace FlockIt.Controllers
     [ApiController]
     public class ProvincesController : ControllerBase
     {
-        private readonly ILogger<ProvincesController> _logger;
         private readonly IConfiguration _config;
         static HttpClient client = new HttpClient();
-        public ProvincesController(ILogger<ProvincesController> logger,
-            IConfiguration config)
+        public ProvincesController(IConfiguration config)
         {
-            _logger = logger;
             _config = config;
         }
 
@@ -28,9 +25,7 @@ namespace FlockIt.Controllers
             HttpResponseMessage response = await client.GetAsync(api);
             var content = await response.Content.ReadAsStringAsync();
             GeoRef? province = JsonSerializer.Deserialize<GeoRef>(content);
-#pragma warning disable CS8602 // Desreferencia de una referencia posiblemente NULL.
             return JsonSerializer.Serialize(province.provincias.FirstOrDefault().centroide);
-#pragma warning restore CS8602 // Desreferencia de una referencia posiblemente NULL.
         }
     }
 }

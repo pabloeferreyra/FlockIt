@@ -11,25 +11,18 @@ namespace FlockIt.Controllers
     public class LoginController : ControllerBase
     {
 
-        private readonly ILogger<LoginController> _logger;
-
-        public LoginController(ILogger<LoginController> logger)
+        public LoginController()
         {
-            _logger = logger;
         }
 
         // POST api/<LoginController>
         [HttpPost]
         public IResult Post([FromBody] User? user)
         {
-            try
-            {
+            if(user != null)
                 return Results.Ok(user);
-            }
-            catch (Exception ex)
-            {
+            else
                 return Results.BadRequest(new { ErrorMessage = "haha, no" });
-            }
         }
     }
 }
